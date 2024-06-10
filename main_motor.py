@@ -16,7 +16,7 @@ current_dir = os.getcwd()
 ## FUNGSI UNTUK READ LOG
 def write_log(lokasi_log, datalog):
     waktulog = datetime.now()
-    dirpathlog = f"Log/{lokasi_log}"
+    dirpathlog = f"{lokasi_log}"
     os.makedirs(dirpathlog, exist_ok=True)
     pathlog = f"{waktulog.strftime('%d%m%Y')}.log"
     file_path = Path(f"{dirpathlog}/{pathlog}")
@@ -46,14 +46,14 @@ async def status_auto():
     
     try:
         pygame.mixer.init()
-        pygame.mixer.music.load(current_dir+"./sound_2.mp3")
+        pygame.mixer.music.load(current_dir+"/sound_2.mp3")
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy() == True:
             continue
-        write_log("api", "PLAY SOUND NTP")
+        write_log("log_api", "PLAY SOUND NTP")
         return {"status":"berhasil mode auto"}
     except:
-        write_log("api", "GAGAL PLAY SOUND NTP")
+        write_log("log_api", "GAGAL PLAY SOUND NTP")
         return {"status":"tidak berhasil mode auto"}
 
 
