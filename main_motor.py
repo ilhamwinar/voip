@@ -9,6 +9,8 @@ import logging
 import sys
 from pathlib import Path
 from datetime import datetime
+import time
+from playsound import playsound
 
 #defini direktori    
 current_dir = os.getcwd()
@@ -41,7 +43,7 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["*"])
 
-@app.get("/status_auto")
+@app.get("/status_test")
 async def status_auto():
     
     try:
@@ -49,12 +51,23 @@ async def status_auto():
         pygame.mixer.music.load(current_dir+"/sound_2.mp3")
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy() == True:
-            continue
-        write_log("log_api", "PLAY SOUND NTP")
+            time.sleep(4)
+        write_log("log_api", "PLAY SOUND VIA PYGAME")
         return {"status":"berhasil mode auto"}
     except:
-        write_log("log_api", "GAGAL PLAY SOUND NTP")
+        write_log("log_api", "GAGAL PLAY SOUND VIA PYGAME")
         return {"status":"tidak berhasil mode auto"}
+
+
+@app.get("/status_auto")
+async def status_test():
+    try:
+        playsound(current_dir+"/sound_2.mp3")
+        write_log("log_api", "PLAY SOUND VIA PLAYSOUND")
+        return {"status":"berhasil mode auto playsound"}
+    except:
+        write_log("log_api", "GAGAL PLAY SOUND VIA PLAYSOUND")
+        return {"status":"tidak berhasil mode auto playsound"}
 
 
 # @app.get(("/open_port"))
